@@ -8,11 +8,29 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-
+class ViewController: UIViewController, BoardButtonInputDelegate {
+    let board = Board()
+    let screen = Screen()
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        self.view.addSubview(board)
+        self.view.addSubview(screen)
+        board.delegate = self
+        board.snp.makeConstraints { (maker) in
+            maker.left.equalTo(0)
+            maker.right.equalTo(0)
+            maker.bottom.equalTo(0)
+            maker.height.equalTo(board.superview!.snp.height).multipliedBy(2/3.0)
+        }
+        
+        
+        
+        screen.snp.makeConstraints { (maker) in
+            maker.left.equalTo(0)
+            maker.right.equalTo(0)
+            maker.top.equalTo(0)
+            maker.bottom.equalTo(board.snp.top)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -20,6 +38,13 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    func boardButtonClick(content: String) {
+        if content == "AC" || content == "Delete" || content == "="{
+            screen.refreshHistory() // todo
+        } else {
+            screen.inputContent(content: content)
+        }
+    }
 
 }
 
