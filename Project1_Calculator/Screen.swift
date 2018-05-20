@@ -65,9 +65,17 @@ class Screen: UIView {
             maker.height.equalTo(inputLabel!.superview!.snp.height).multipliedBy(0.5).offset(-10)
         })
     }
-    
+
+    func deleteInput() {
+        if inputString.count>0 {
+            inputString.remove(at: inputString.index(before:inputString.endIndex))
+            inputLabel?.text = inputString
+        }
+    }
+
     func inputContent(content: String){
         let char = content.characters.last!
+//        print("Screen", "last = \(char)", "inputString = \(inputString)")
         if !figureArray.contains(char) && !funcArray.contains(char){
             return
         }
@@ -82,7 +90,7 @@ class Screen: UIView {
             }
         } else {// 第一个输入
             if figureArray.contains(char){
-                inputString.append(char)
+                inputString.append(content)
                 inputLabel?.text = inputString
             }
         }
