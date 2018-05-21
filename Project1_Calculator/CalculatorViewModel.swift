@@ -58,7 +58,6 @@ class CalculatorViewModel {
     private func inputContent(content: String){
         print("CalculatorViewModel inputContent \(content)")
         let char = content.characters.last!
-//        print("Screen", "last = \(char)", "inputString = \(inputString)")
         if !figureArray.contains(char) && !funcArray.contains(char){
             return
         }

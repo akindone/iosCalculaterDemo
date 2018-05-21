@@ -16,8 +16,6 @@ class ViewController: UIViewController, BoardButtonInputDelegate {
     private var disposeBag = DisposeBag()
     let viewModel: CalculatorViewModel = CalculatorViewModel()
 
-//    var isNew = true
-
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addSubview(board)
@@ -57,30 +55,6 @@ class ViewController: UIViewController, BoardButtonInputDelegate {
 
     func boardButtonClick(content: String) {
         viewModel.onBoardClickAction(content: content)
-//        if content == "AC" || content == "Del" || content == "=" {
-//
-//            switch content {
-//            case "AC":
-//                screen.clearContent()
-//                screen.refreshHistory()
-//            case "Del":
-//                screen.deleteInput()
-//            case "=":
-//                let result = calculator.calculateEquation(equation: screen.inputString)
-//                screen.refreshHistory()
-//                screen.clearContent()
-//                screen.inputContent(content: String(result))
-//                isNew = true
-//            default:
-//                screen.refreshHistory()
-//            }
-//        } else {
-//            if isNew {
-//                screen.clearContent()
-//                isNew = false
-//            }
-//            screen.inputContent(content: content)
-//        }
     }
 
 }
