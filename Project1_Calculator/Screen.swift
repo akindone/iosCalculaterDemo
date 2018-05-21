@@ -13,14 +13,22 @@ class Screen: UIView {
     
     var inputLabel: UILabel?
     var historyLabel: UILabel?
-    var inputString = ""
-    var historyString = ""
-    let figureArray: Array<Character> = [
-        "0","1","2","3","4","5","6","7","8","9","."
-    ]
-    let funcArray: Array<Character> = [
-        "+","-","*","/","%","^"
-    ]
+    var inputString = ""{
+        didSet {
+            inputLabel?.text = inputString
+        }
+    }
+    var historyString = ""{
+        didSet {
+            historyLabel?.text = historyString
+        }
+    }
+//    let figureArray: Array<Character> = [
+//        "0","1","2","3","4","5","6","7","8","9","."
+//    ]
+//    let funcArray: Array<Character> = [
+//        "+","-","*","/","%","^"
+//    ]
     
     init(){
         inputLabel = UILabel()
@@ -66,51 +74,51 @@ class Screen: UIView {
         })
     }
 
-    func deleteInput() {
-        if inputString.count>0 {
-            inputString.remove(at: inputString.index(before:inputString.endIndex))
-            inputLabel?.text = inputString
-        }
-    }
+//    func deleteInput() {
+//        if inputString.count>0 {
+//            inputString.remove(at: inputString.index(before:inputString.endIndex))
+//            inputLabel?.text = inputString
+//        }
+//    }
 
-    func inputContent(content: String){
-        let char = content.characters.last!
-//        print("Screen", "last = \(char)", "inputString = \(inputString)")
-        if !figureArray.contains(char) && !funcArray.contains(char){
-            return
-        }
-        if inputString.characters.count > 0 {// 非第一个输入
-            let lastInputChar = inputString.characters.last!
-            if lastInputChar == "." && char == "."{
-                return
-            }
-            if figureArray.contains(lastInputChar) || figureArray.contains(char){ // 上一个字符是数字 或者 这个字符是数字，可以输入; 如果上一个是运算符且这个还是运算符就不走下面的代码
-                inputString.append(char)
-                inputLabel?.text = inputString
-            }
-        } else {// 第一个输入
-            if figureArray.contains(char){
-                inputString.append(content)
-                inputLabel?.text = inputString
-            }
-        }
-    }
+//    func inputContent(content: String){
+//        let char = content.characters.last!
+////        print("Screen", "last = \(char)", "inputString = \(inputString)")
+//        if !figureArray.contains(char) && !funcArray.contains(char){
+//            return
+//        }
+//        if inputString.characters.count > 0 {// 非第一个输入
+//            let lastInputChar = inputString.characters.last!
+//            if lastInputChar == "." && char == "."{
+//                return
+//            }
+//            if figureArray.contains(lastInputChar) || figureArray.contains(char){ // 上一个字符是数字 或者 这个字符是数字，可以输入; 如果上一个是运算符且这个还是运算符就不走下面的代码
+//                inputString.append(char)
+//                inputLabel?.text = inputString
+//            }
+//        } else {// 第一个输入
+//            if figureArray.contains(char){
+//                inputString.append(content)
+//                inputLabel?.text = inputString
+//            }
+//        }
+//    }
     
-    func refreshHistory(){
-        historyString = inputString
-        historyLabel?.text = historyString
-    }
+//    func refreshHistory(){
+//        historyString = inputString
+//        historyLabel?.text = historyString
+//    }
     
-    func clearContent(){
-        inputString = ""
-    }
+//    func clearContent(){
+//        inputString = ""
+//    }
     
-    func delInput(){// 回删1个字符
-        if inputString.characters.count > 0{
-            inputString.removeLast()
-            inputLabel?.text = inputString
-        }
-    }
+//    func delInput(){// 回删1个字符
+//        if inputString.characters.count > 0{
+//            inputString.removeLast()
+//            inputLabel?.text = inputString
+//        }
+//    }
 
     /*
     // Only override draw() if you perform custom drawing.

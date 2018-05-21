@@ -7,12 +7,16 @@
 //
 
 import UIKit
+import RxSwift
 
 class ViewController: UIViewController, BoardButtonInputDelegate {
     let board = Board()
     let screen = Screen()
     let calculator = CalculatorEngine()
-    var isNew = true
+    private var disposeBag = DisposeBag()
+    let viewModel: CalculatorViewModel = CalculatorViewModel()
+
+//    var isNew = true
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,17 +27,27 @@ class ViewController: UIViewController, BoardButtonInputDelegate {
             maker.left.equalTo(0)
             maker.right.equalTo(0)
             maker.bottom.equalTo(0)
-            maker.height.equalTo(board.superview!.snp.height).multipliedBy(2/3.0)
+            maker.height.equalTo(board.superview!.snp.height).multipliedBy(2 / 3.0)
         }
-        
-        
-        
+
         screen.snp.makeConstraints { (maker) in
             maker.left.equalTo(0)
             maker.right.equalTo(0)
             maker.top.equalTo(0)
             maker.bottom.equalTo(board.snp.top)
         }
+        bindViewModel()
+    }
+
+    private func bindViewModel() {
+        viewModel.rxInput.asObservable().subscribe(onNext: {
+            print("ViewController bindViewModel \($0)")
+            self.screen.inputString = $0
+        }).disposed(by: disposeBag)
+        viewModel.rxHistory.asObservable().subscribe(onNext: {
+            self.screen.historyString = $0
+        }).disposed(by: disposeBag)
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -42,30 +56,31 @@ class ViewController: UIViewController, BoardButtonInputDelegate {
     }
 
     func boardButtonClick(content: String) {
-        if content == "AC" || content == "Del" || content == "="{
-
-            switch content {
-            case "AC":
-                screen.clearContent()
-                screen.refreshHistory()
-            case "Del":
-                screen.deleteInput()
-            case "=":
-                let result = calculator.calculateEquation(equation: screen.inputString)
-                screen.refreshHistory()
-                screen.clearContent()
-                screen.inputContent(content: String(result))
-                isNew = true
-            default:
-                screen.refreshHistory()
-            }
-        }else{
-            if isNew {
-                screen.clearContent()
-                isNew = false
-            }
-            screen.inputContent(content: content)
-        }
+        viewModel.onBoardClickAction(content: content)
+//        if content == "AC" || content == "Del" || content == "=" {
+//
+//            switch content {
+//            case "AC":
+//                screen.clearContent()
+//                screen.refreshHistory()
+//            case "Del":
+//                screen.deleteInput()
+//            case "=":
+//                let result = calculator.calculateEquation(equation: screen.inputString)
+//                screen.refreshHistory()
+//                screen.clearContent()
+//                screen.inputContent(content: String(result))
+//                isNew = true
+//            default:
+//                screen.refreshHistory()
+//            }
+//        } else {
+//            if isNew {
+//                screen.clearContent()
+//                isNew = false
+//            }
+//            screen.inputContent(content: content)
+//        }
     }
 
 }
