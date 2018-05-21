@@ -42,7 +42,7 @@ class CalculatorViewModel {
         case "AC":
             inputString = ""
             historyString = inputString
-        case "Del":
+        case "Delete":
             if inputString.characters.count > 0{
                 inputString.removeLast()
             }
@@ -63,7 +63,7 @@ class CalculatorViewModel {
         }
         if inputString.characters.count > 0 {// 非第一个输入
             let lastInputChar = inputString.characters.last!
-            if lastInputChar == "." && char == "."{
+            if inputString.contains(".") && char == "."{
                 return
             }
             if figureArray.contains(lastInputChar) || figureArray.contains(char){ // 上一个字符是数字 或者 这个字符是数字，可以输入; 如果上一个是运算符且这个还是运算符就不走下面的代码
